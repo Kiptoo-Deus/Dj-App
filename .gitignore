@@ -1,0 +1,5 @@
+
+*.vsidx
+**/Builds
+**/JuceLibraryCode
+**/.DS_Store
