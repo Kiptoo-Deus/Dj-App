@@ -2,7 +2,7 @@
 
 //==============================================================================
 MainComponent::MainComponent() :
-   audiodeviceSelector (deviceManager, 2,2,2,2,true,true,false,false)
+    deviceScanner(deviceManager), audiodeviceSelector (deviceManager, 2,8,2,8,true,true,false,false)
 {
   
     setSize (800, 600);
@@ -18,12 +18,16 @@ MainComponent::MainComponent() :
        
         setAudioChannels (2, 2);
     }
+
+    deviceManager.addChangeListener(&deviceScanner);
+
     addAndMakeVisible(audiodeviceSelector);
 
 }
 
 MainComponent::~MainComponent()
 {
+    deviceManager.removeAllChangeListeners();
     
     shutdownAudio();
 }
@@ -56,3 +60,4 @@ void MainComponent::resized()
 {
     audiodeviceSelector.setBounds(getBounds());
 }
+
