@@ -4,6 +4,11 @@
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
   <MAINGROUP id="NI0yvj" name="audioDeviceManager">
     <GROUP id="{A4BE488B-675F-815B-AEF8-540A5726F1FB}" name="Source">
+      <FILE id="dUqNVO" name="MixerDeviceScanner.h" compile="0" resource="0"
+            file="Source/MixerDeviceScanner.h"/>
+      <FILE id="D36qIf" name="MixerDeviceList.h" compile="0" resource="0"
+            file="Source/MixerDeviceList.h"/>
+      <FILE id="eOlWun" name="MixerDevice.h" compile="0" resource="0" file="Source/MixerDevice.h"/>
       <FILE id="bQlj5a" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="pCcgAd" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="U3P3DW" name="MainComponent.cpp" compile="1" resource="0"

@@ -2,7 +2,7 @@
 
 //==============================================================================
 MainComponent::MainComponent() :
-    deviceScanner(deviceManager), audiodeviceSelector (deviceManager, 2,8,2,8,true,true,false,false)
+    deviceScanner (deviceManager), settingsWindow ("Settings", juce::Colours::black, true)
 {
   
     setSize (800, 600);
@@ -21,7 +21,20 @@ MainComponent::MainComponent() :
 
     deviceManager.addChangeListener(&deviceScanner);
 
-    addAndMakeVisible(audiodeviceSelector);
+    settingsButton.setButtonText("Settings");
+    settingsButton.setToggleable(false);
+
+    settingsButton.onClick = [&]()
+    {
+        juce::DialogWindow::LaunchOptions windowOptions;
+        windowOptions.dialogTitle = "Settings";
+        windowOptions.useNativeTitleBar = true;
+        windowOptions.content.setOwned(new juce::AudioDeviceSelectorComponent(deviceManager, 2, 8, 2, 8, true, true, false, false));
+        windowOptions.content->setSize(800, 600);
+        windowOptions.launchAsync();
+    };
+
+    addAndMakeVisible(settingsButton);
 
 }
 
@@ -58,6 +71,6 @@ void MainComponent::paint(juce::Graphics& g)
 
 void MainComponent::resized()
 {
-    audiodeviceSelector.setBounds(getBounds());
+    settingsButton.setBounds(10,10,200,100);
 }
 
