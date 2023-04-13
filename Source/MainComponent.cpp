@@ -23,7 +23,21 @@ MainComponent::MainComponent() :
     audioFormatManager.registerBasicFormats();
     loadAudioButton.setButtonText("Load");
     addAndMakeVisible(loadAudioButton);
+     
+    loadAudioButton.onClick = [&]()
+    {   
+        DBG("Load button clicked");
+
+        juce::File musicFile{"Users\JOEL\Downloads\Music\Audio Demos_5th Sweep Pad.mp3"};
+        jassert(musicFile.exists());
+
+        auto* r = audioFormatManager.createReaderFor(juce::File("Users\JOEL\Downloads\Music\Audio Demos_5th Sweep Pad.mp3"));
+        auto reader = std::make_unique<juce::AudioFormatReader*>(r);
+        jassert(reader != nullptr);
         
+        
+        //load button when clicked will locate file 
+    };
 
     deviceManager.addChangeListener(&deviceScanner);
 
