@@ -19,6 +19,12 @@ MainComponent::MainComponent() :
         setAudioChannels (2, 2);
     }
 
+
+    audioFormatManager.registerBasicFormats();
+    loadAudioButton.setButtonText("Load");
+    addAndMakeVisible(loadAudioButton);
+        
+
     deviceManager.addChangeListener(&deviceScanner);
 
     settingsButton.setButtonText("Settings");
@@ -72,5 +78,6 @@ void MainComponent::paint(juce::Graphics& g)
 void MainComponent::resized()
 {
     settingsButton.setBounds(10,10,200,100);
+    loadAudioButton.setBounds(10,200,200,100);
 }
 
