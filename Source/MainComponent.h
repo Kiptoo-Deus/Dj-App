@@ -38,6 +38,7 @@ private:
     MixerDeviceScanner deviceScanner;
     juce::AudioFormatManager audioFormatManager;
     juce::TextButton loadAudioButton {"Load"};
+    juce::AudioBuffer<float>audioSourceBuffer;
 
     //UI
     juce::TextButton settingsButton{ "Settings" };

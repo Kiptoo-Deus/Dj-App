@@ -28,14 +28,18 @@ MainComponent::MainComponent() :
     {   
         DBG("Load button clicked");
 
-        juce::File musicFile{"Users\JOEL\Downloads\Music\Audio Demos_5th Sweep Pad.mp3"};
+        juce::File musicFile{"C:\\lifted.mp3"};
         jassert(musicFile.exists());
-
-        auto* r = audioFormatManager.createReaderFor(juce::File("Users\JOEL\Downloads\Music\Audio Demos_5th Sweep Pad.mp3"));
-        auto reader = std::make_unique<juce::AudioFormatReader*>(r);
+       
+        auto* r = audioFormatManager.createReaderFor(juce::File("C:\\lifted.mp3"));
+        std::unique_ptr<juce::AudioFormatReader>reader (r);
         jassert(reader != nullptr);
-        
-        
+        auto numSamples = static_cast<int>(reader->lengthInSamples);
+
+        audioSourceBuffer.setSize(reader->numChannels, numSamples);
+        jassert(numSamples > 0 && reader->numChannels > 0);
+        reader->read(&audioSourceBuffer, 0, numSamples, 0, true, true);
+
         //load button when clicked will locate file 
     };
 
