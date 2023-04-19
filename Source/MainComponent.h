@@ -35,10 +35,17 @@ public:
 
 private:
 
+    void processAudio(const juce::AudioSourceChannelInfo& bufferToFill);
+
+
     MixerDeviceScanner deviceScanner;
     juce::AudioFormatManager audioFormatManager;
     juce::TextButton loadAudioButton {"Load"};
     juce::AudioBuffer<float>audioSourceBuffer;
+
+    int readPosition{ 0 };
+
+    bool fileIsLoaded{ false };
 
     //UI
     juce::TextButton settingsButton{ "Settings" };

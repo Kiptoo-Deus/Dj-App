@@ -46,6 +46,8 @@ MainComponent::MainComponent() :
             audioSourceBuffer.applyGain(ch, 0, numSamples, 0.2f);
         };
         //load button when clicked will locate file 
+
+        fileIsLoaded = true;
     };
 
     deviceManager.addChangeListener(&deviceScanner);
@@ -83,7 +85,10 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
 {
    
     bufferToFill.clearActiveBufferRegion();
+    if(fileIsLoaded)
+    processAudio(bufferToFill);
 }
+
 
 void MainComponent::releaseResources()
 {
@@ -103,4 +108,18 @@ void MainComponent::resized()
     settingsButton.setBounds(10,10,200,100);
     loadAudioButton.setBounds(10,200,200,100);
 }
+void MainComponent::processAudio(const juce::AudioSourceChannelInfo& bufferToFill)
+{
+    auto* buffer = bufferToFill.buffer;
+
+    //copy buffer size number of samples ofaudio source buffer to main buffer
+    jassert (buffer->getNumChannels() == audioSourceBuffer.getNumChannels());
+    for (int ch = 0; ch < buffer->getNumChannels(); ch++)
+    {
+        buffer->copyFrom(ch, 0, audioSourceBuffer, ch, readPosition, buffer->getNumSamples());
+    }
+    readPosition +=buffer-> getNumSamples();
+
+}
+
 
