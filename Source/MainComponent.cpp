@@ -40,6 +40,11 @@ MainComponent::MainComponent() :
         jassert(numSamples > 0 && reader->numChannels > 0);
         reader->read(&audioSourceBuffer, 0, numSamples, 0, true, true);
 
+        //apply temp gain to protect our ears
+        for (int ch = 0; ch < audioSourceBuffer.getNumChannels(); ch++)
+        {
+            audioSourceBuffer.applyGain(ch, 0, numSamples, 0.2f);
+        };
         //load button when clicked will locate file 
     };
 
