@@ -35,18 +35,26 @@ public:
 
 private:
 
+    enum class PlayState
+    {
+        Stopped,
+        Playing,
+    };
+
     void processAudio(const juce::AudioSourceChannelInfo& bufferToFill);
 
 
     MixerDeviceScanner deviceScanner;
     juce::AudioFormatManager audioFormatManager;
     juce::TextButton loadAudioButton {"Load"};
+    juce::TextButton playAudioButton{ "Play" };
+    juce::TextButton stopAudioButton{ "Stop" };
     juce::AudioBuffer<float>audioSourceBuffer;
 
     int readPosition{ 0 };
 
     bool fileIsLoaded{ false };
-
+    PlayState playState{ PlayState::Stopped };
     //UI
     juce::TextButton settingsButton{ "Settings" };
     juce::DialogWindow settingsWindow;

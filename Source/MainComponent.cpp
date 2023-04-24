@@ -22,7 +22,11 @@ MainComponent::MainComponent() :
 
     audioFormatManager.registerBasicFormats();
     loadAudioButton.setButtonText("Load");
+    playAudioButton.setButtonText("Play");
+    stopAudioButton.setButtonText("Stop");
     addAndMakeVisible(loadAudioButton);
+    addAndMakeVisible(playAudioButton);
+    addAndMakeVisible(stopAudioButton);
      
     loadAudioButton.onClick = [&]()
     {   
@@ -48,6 +52,16 @@ MainComponent::MainComponent() :
         //load button when clicked will locate file 
 
         fileIsLoaded = true;
+    };
+
+    playAudioButton.onClick = [&]()
+    {
+        playState = PlayState::Playing;
+    };
+
+    stopAudioButton.onClick = [&]()
+    {
+        playState = PlayState::Stopped;
     };
 
     deviceManager.addChangeListener(&deviceScanner);
@@ -85,7 +99,7 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
 {
    
     bufferToFill.clearActiveBufferRegion();
-    if(fileIsLoaded)
+    if(fileIsLoaded && playState == PlayState::Playing)
     processAudio(bufferToFill);
 }
 
@@ -105,8 +119,12 @@ void MainComponent::paint(juce::Graphics& g)
 
 void MainComponent::resized()
 {
-    settingsButton.setBounds(10,10,200,100);
-    loadAudioButton.setBounds(10,200,200,100);
+    auto w = 100;
+    auto h = 50;
+    settingsButton.setBounds(10,10,w,h);
+    loadAudioButton.setBounds(10,200,w, h);
+    playAudioButton.setBounds(10, 260, w, h);
+    stopAudioButton.setBounds(10, 320, w, h);
 }
 void MainComponent::processAudio(const juce::AudioSourceChannelInfo& bufferToFill)
 {
@@ -121,5 +139,6 @@ void MainComponent::processAudio(const juce::AudioSourceChannelInfo& bufferToFil
     readPosition +=buffer-> getNumSamples();
 
 }
+
 
 
