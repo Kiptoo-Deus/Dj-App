@@ -1,15 +1,9 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "MixerDeviceScanner.h"
-
-
-
-
-
-
-
-
+#include "MixerDevice/MixerDeviceScanner.h"//DATA
+#include "AudioPlayer/Data/AudioPlayerData.h"
+#include "AudioPlayer/UI/AudioPlayerUI.h"//UI
 
 
 //==============================================================================
@@ -34,31 +28,16 @@ public:
     void resized() override;
 
 private:
-
-    enum class PlayState
-    {
-        Stopped,
-        Playing,
-    };
-
-    void processAudio(const juce::AudioSourceChannelInfo& bufferToFill);
-
-
-    MixerDeviceScanner deviceScanner;
-    juce::AudioFormatManager audioFormatManager;
-    juce::TextButton loadAudioButton {"Load"};
-    juce::TextButton playAudioButton{ "Play" };
-    juce::TextButton stopAudioButton{ "Stop" };
-    juce::AudioBuffer<float>audioSourceBuffer;
-
-    int readPosition{ 0 };
-
-    bool fileIsLoaded{ false };
-    PlayState playState{ PlayState::Stopped };
+   MixerDeviceScanner deviceScanner;//scans our list for usb devices connected
+    
     //UI
     juce::TextButton settingsButton{ "Settings" };
     juce::DialogWindow settingsWindow;
-
-
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
+    
+    //Player UI is controlling Data
+    AudioPlayerData audioPlayerData1;
+    AudioPlayerUI audioPlayerUI1;
+    
+    bool fileIsLoaded{ false }; 
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent)
 };

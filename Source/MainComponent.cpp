@@ -2,7 +2,8 @@
 
 //==============================================================================
 MainComponent::MainComponent() :
-    deviceScanner (deviceManager), settingsWindow ("Settings", juce::Colours::black, true)
+    deviceScanner (deviceManager), settingsWindow ("Settings", juce::Colours::black, true),
+    audioPlayerUI1(audioPlayerData1)
 {
   
     setSize (800, 600);
@@ -18,52 +19,8 @@ MainComponent::MainComponent() :
        
         setAudioChannels (2, 2);
     }
-
-
-    audioFormatManager.registerBasicFormats();
-    loadAudioButton.setButtonText("Load");
-    playAudioButton.setButtonText("Play");
-    stopAudioButton.setButtonText("Stop");
-    addAndMakeVisible(loadAudioButton);
-    addAndMakeVisible(playAudioButton);
-    addAndMakeVisible(stopAudioButton);
-     
-    loadAudioButton.onClick = [&]()
-    {   
-        DBG("Load button clicked");
-
-        juce::File musicFile{"C:\\lifted.mp3"};
-        jassert(musicFile.exists());
-       
-        auto* r = audioFormatManager.createReaderFor(juce::File("C:\\lifted.mp3"));
-        std::unique_ptr<juce::AudioFormatReader>reader (r);
-        jassert(reader != nullptr);
-        auto numSamples = static_cast<int>(reader->lengthInSamples);
-
-        audioSourceBuffer.setSize(reader->numChannels, numSamples);
-        jassert(numSamples > 0 && reader->numChannels > 0);
-        reader->read(&audioSourceBuffer, 0, numSamples, 0, true, true);
-
-        //apply temp gain to protect our ears
-        for (int ch = 0; ch < audioSourceBuffer.getNumChannels(); ch++)
-        {
-            audioSourceBuffer.applyGain(ch, 0, numSamples, 0.2f);
-        };
-        //load button when clicked will locate file 
-
-        fileIsLoaded = true;
-    };
-
-    playAudioButton.onClick = [&]()
-    {
-        playState = PlayState::Playing;
-    };
-
-    stopAudioButton.onClick = [&]()
-    {
-        playState = PlayState::Stopped;
-    };
-
+  
+  
     deviceManager.addChangeListener(&deviceScanner);
 
     settingsButton.setButtonText("Settings");
@@ -80,7 +37,8 @@ MainComponent::MainComponent() :
     };
 
     addAndMakeVisible(settingsButton);
-
+    addAndMakeVisible(audioPlayerUI1);
+    fileIsLoaded = audioPlayerData1.loadFile();
 }
 
 MainComponent::~MainComponent()
@@ -92,15 +50,15 @@ MainComponent::~MainComponent()
 
 void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
-    
+   
 }
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
 {
    
     bufferToFill.clearActiveBufferRegion();
-    if(fileIsLoaded && playState == PlayState::Playing)
-    processAudio(bufferToFill);
+    if(fileIsLoaded && audioPlayerData1.getPlayState() == AudioPlayerState::Playing)
+    audioPlayerData1.processAudio(bufferToFill);
 }
 
 
@@ -119,25 +77,10 @@ void MainComponent::paint(juce::Graphics& g)
 
 void MainComponent::resized()
 {
-    auto w = 100;
-    auto h = 50;
-    settingsButton.setBounds(10,10,w,h);
-    loadAudioButton.setBounds(10,200,w, h);
-    playAudioButton.setBounds(10, 260, w, h);
-    stopAudioButton.setBounds(10, 320, w, h);
-}
-void MainComponent::processAudio(const juce::AudioSourceChannelInfo& bufferToFill)
-{
-    auto* buffer = bufferToFill.buffer;
-
-    //copy buffer size number of samples ofaudio source buffer to main buffer
-    jassert (buffer->getNumChannels() == audioSourceBuffer.getNumChannels());
-    for (int ch = 0; ch < buffer->getNumChannels(); ch++)
-    {
-        buffer->copyFrom(ch, 0, audioSourceBuffer, ch, readPosition, buffer->getNumSamples());
-    }
-    readPosition +=buffer-> getNumSamples();
-
+   
+ 
+    audioPlayerUI1.setBounds(0, 0, getWidth(), getHeight());
+    settingsButton.setBounds(10, 10, 100, 50);
 }
 
 
