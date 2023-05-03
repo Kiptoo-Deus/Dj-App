@@ -36,6 +36,8 @@ AudioPlayerUI::AudioPlayerUI(AudioPlayerData& p): audioPlayerData(p)
     {
         audioPlayerData.setPlaySate ( AudioPlayerState::Stopped) ;
     };
+
+    gainSlider.setRange(-60.0, 3.0,0.01);
     addAndMakeVisible(gainSlider);
 }
 
@@ -61,6 +63,6 @@ void AudioPlayerUI::resized()
     loadAudioButton.setBounds(10, 200, w, h);
     playAudioButton.setBounds(10, 260, w, h);
     stopAudioButton.setBounds(10, 320, w, h);
-    gainSlider.setBounds(120,200,50,120);                   // slider
+    gainSlider.setBounds(120,200,50,170);                   // slider
 
 }
