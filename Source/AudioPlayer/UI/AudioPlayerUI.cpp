@@ -38,6 +38,13 @@ AudioPlayerUI::AudioPlayerUI(AudioPlayerData& p): audioPlayerData(p)
     };
 
     gainSlider.setRange(-60.0, 3.0,0.01);
+
+    gainSlider.onValueChange = [&]()
+    {   
+        auto gainValue = juce::Decibels::decibelsToGain(gainSlider.getValue());
+        audioPlayerData.setGain(gainValue);
+    };
+
     addAndMakeVisible(gainSlider);
 }
 
