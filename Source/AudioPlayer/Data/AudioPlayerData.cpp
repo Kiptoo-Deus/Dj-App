@@ -44,7 +44,8 @@ bool AudioPlayerData::loadFile()
     if (reader == nullptr) {
         return false;
     }
-
+   
+    
     auto numSamples = static_cast<int>(reader->lengthInSamples);
 
     audioSourceBuffer.setSize(reader->numChannels, numSamples);

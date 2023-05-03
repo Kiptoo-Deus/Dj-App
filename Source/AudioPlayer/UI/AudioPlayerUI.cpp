@@ -36,6 +36,7 @@ AudioPlayerUI::AudioPlayerUI(AudioPlayerData& p): audioPlayerData(p)
     {
         audioPlayerData.setPlaySate ( AudioPlayerState::Stopped) ;
     };
+    addAndMakeVisible(gainSlider);
 }
 
 void AudioPlayerUI::paint(juce::Graphics& g)
@@ -45,12 +46,12 @@ void AudioPlayerUI::paint(juce::Graphics& g)
     g.fillAll(getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId));   // clear the background
 
     g.setColour(juce::Colours::grey);
-    g.drawRect(getLocalBounds(), 1);   // draw an outline around the component
+    g.drawRect(getLocalBounds(), 1);                            // draw an outline around the component
 
     g.setColour(juce::Colours::white);
     g.setFont(14.0f);
     g.drawText("AudioPlayerUI", getLocalBounds(),
-        juce::Justification::centred, true);   // draw some placeholder text
+        juce::Justification::centred, true);                  // draw some placeholder text
 }
 
 void AudioPlayerUI::resized()
@@ -60,5 +61,6 @@ void AudioPlayerUI::resized()
     loadAudioButton.setBounds(10, 200, w, h);
     playAudioButton.setBounds(10, 260, w, h);
     stopAudioButton.setBounds(10, 320, w, h);
+    gainSlider.setBounds(120,200,50,120);                   // slider
 
 }
