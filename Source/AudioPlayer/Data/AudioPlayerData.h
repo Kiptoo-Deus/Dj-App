@@ -18,17 +18,18 @@ public:
     AudioPlayerData();
     bool loadFile();
     void processAudio(const juce::AudioSourceChannelInfo& bufferToFill);
-    void setGain(float newGain);
+    void setDecibelValue(float value);
     AudioPlayerState getPlayState() const { return playState; }
 
-    void setPlaySate(AudioPlayerState newState) { playState = newState; }
-private:
+    void setPlaySate(AudioPlayerState newState) { playState = newState; 
+  }
   
 private:
     juce::AudioFormatManager audioFormatManager;
     juce::AudioBuffer<float>audioSourceBuffer;
     int readPosition{ 0 };
     bool fileIsLoaded{ false };
+    float rawGain{ 1.0f };
     AudioPlayerState playState{ AudioPlayerState::Stopped };
   
 };

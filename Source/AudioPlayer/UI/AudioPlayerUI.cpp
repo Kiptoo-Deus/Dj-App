@@ -37,12 +37,13 @@ AudioPlayerUI::AudioPlayerUI(AudioPlayerData& p): audioPlayerData(p)
         audioPlayerData.setPlaySate ( AudioPlayerState::Stopped) ;
     };
 
-    gainSlider.setRange(-60.0, 3.0,0.01);
+    gainSlider.setRange(-60.0, 0.0f,0.01);
+    gainSlider.setValue(0.0f);
 
     gainSlider.onValueChange = [&]()
     {   
         auto gainValue = juce::Decibels::decibelsToGain(gainSlider.getValue());
-        audioPlayerData.setGain(gainValue);
+        audioPlayerData.setDecibelValue(gainSlider.getValue());
     };
 
     addAndMakeVisible(gainSlider);
