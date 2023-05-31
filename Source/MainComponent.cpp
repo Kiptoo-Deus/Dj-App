@@ -50,7 +50,9 @@ MainComponent::~MainComponent()
 
 void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
-   
+   // auto outputChannels = deviceManager.getAudioDeviceSetup().outputChannels;
+    //let's assume this is a stereo setup for each track
+    audioPlayerData1.prepareToPlay(2,samplesPerBlockExpected,sampleRate);
 }
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)

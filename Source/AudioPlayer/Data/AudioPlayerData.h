@@ -17,6 +17,7 @@ class AudioPlayerData
 public:
     AudioPlayerData();
     bool loadFile();
+    void prepareToPlay(int numChannels, int samplesPerBlockExpected, double sampleRate);
     void processAudio(const juce::AudioSourceChannelInfo& bufferToFill);
     void setDecibelValue(float value);
     AudioPlayerState getPlayState() const { return playState; }
@@ -26,7 +27,11 @@ public:
   
 private:
     juce::AudioFormatManager audioFormatManager;
-    juce::AudioBuffer<float>audioSourceBuffer;
+
+    //Holds "entire track"
+    juce::AudioBuffer<float>audiosourceBuffer;
+    //Holds "mutable temp data before being passed to main buffer"
+    juce::AudioBuffer<float> playerBuffer;
     int readPosition{ 0 };
     bool fileIsLoaded{ false };
     float rawGain{ 1.0f };

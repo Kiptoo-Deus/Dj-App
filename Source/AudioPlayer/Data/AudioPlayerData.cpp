@@ -8,6 +8,8 @@
   ==============================================================================
 */
 #include "AudioPlayerData.h"
+#include <JuceHeader.h>
+#include "../../State/AudioPlayerState.h"
 
 
 AudioPlayerData::AudioPlayerData()
@@ -26,29 +28,37 @@ bool AudioPlayerData::loadFile()
     jassert(reader != nullptr);
     auto numSamples = static_cast<int>(reader->lengthInSamples);
 
-    audioSourceBuffer.setSize(reader->numChannels, numSamples);
+    audiosourceBuffer.setSize(reader->numChannels, numSamples);
     jassert(numSamples > 0 && reader->numChannels > 0);
 
     //file loaded succesfully?
-    reader->read(&audioSourceBuffer, 0, numSamples, 0, true, true);
+    reader->read(&audiosourceBuffer, 0, numSamples, 0, true, true);
     return true;
+}
+void AudioPlayerData::prepareToPlay(int numChannels,int samplesPerBlock, double sampleRate)
+{
+    playerBuffer.setSize(numChannels, samplesPerBlock);
 }
 
 void AudioPlayerData::processAudio(const juce::AudioSourceChannelInfo& bufferToFill)
 {
-    auto* buffer = bufferToFill.buffer;
+        auto* buffer = bufferToFill.buffer;
 
+        
 
+        playerBuffer.clear();
 
-    //copy buffer size number of samples ofaudio source buffer to main buffer
-    jassert(buffer->getNumChannels() == audioSourceBuffer.getNumChannels());
-
-
-
+        // you haven't called prepare toplay
+        jassert(playerBuffer.getNumSamples() > 0 && playerBuffer.getNumChannels() == buffer->getNumChannels());
+        jassert(playerBuffer.getNumChannels() == buffer->getNumChannels());
+    
     for (int ch = 0; ch < buffer->getNumChannels(); ch++)
     {
-        buffer->copyFrom(ch, 0, audioSourceBuffer, ch, readPosition, buffer->getNumSamples());
-        buffer->applyGain(ch, 0, buffer->getNumSamples(), rawGain);
+        playerBuffer.copyFrom(ch, 0, audiosourceBuffer, ch, readPosition, playerBuffer.getNumSamples());
+        playerBuffer.applyGain(ch, 0, playerBuffer.getNumSamples(), rawGain);
+
+        //Addsamples to main Buffer
+        buffer->addFrom(ch, 0, playerBuffer, ch, 0, buffer->getNumSamples());
     }
     readPosition += buffer->getNumSamples();
 
