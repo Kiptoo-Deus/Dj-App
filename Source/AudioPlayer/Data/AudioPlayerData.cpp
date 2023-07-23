@@ -20,20 +20,29 @@ bool AudioPlayerData::loadFile()
 {
     DBG("Load button clicked");
 
-    juce::File musicFile{ "C:\\lifted.mp3" };
-    jassert(musicFile.exists());
+    juce::FileChooser myChooser(juce::FileChooser("Please select the track you want to play...",
+                                                  juce::File::getSpecialLocation (juce::File::userMusicDirectory),
+                                                  "*.wav; *.mp3"));
+ 
 
-    auto* r = audioFormatManager.createReaderFor(juce::File("C:\\lifted.mp3"));
-    std::unique_ptr<juce::AudioFormatReader>reader(r);
-    jassert(reader != nullptr);
-    auto numSamples = static_cast<int>(reader->lengthInSamples);
+    if (myChooser.browseForFileToOpen())
+    {
+        juce::File musicFile (myChooser.getResult());
 
-    audiosourceBuffer.setSize(reader->numChannels, numSamples);
-    jassert(numSamples > 0 && reader->numChannels > 0);
+        auto* r = audioFormatManager.createReaderFor(musicFile);
+        std::unique_ptr<juce::AudioFormatReader>reader(r);
+        jassert(reader != nullptr);
+        auto numSamples = static_cast<int>(reader->lengthInSamples);
 
-    //file loaded succesfully?
-    reader->read(&audiosourceBuffer, 0, numSamples, 0, true, true);
-    return true;
+        audiosourceBuffer.setSize(reader->numChannels, numSamples);
+        jassert(numSamples > 0 && reader->numChannels > 0);
+
+        //file loaded succesfully?
+        reader->read(&audiosourceBuffer, 0, numSamples, 0, true, true);
+        return true;
+    }
+    
+    return false;
 }
 void AudioPlayerData::prepareToPlay(int numChannels,int samplesPerBlock, double sampleRate)
 {
