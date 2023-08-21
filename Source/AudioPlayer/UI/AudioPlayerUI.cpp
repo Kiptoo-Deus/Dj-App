@@ -47,6 +47,9 @@ AudioPlayerUI::AudioPlayerUI(AudioPlayerData& p): audioPlayerData(p)
     };
 
     addAndMakeVisible(gainSlider);
+
+    songNameLabel.setText("No song loaded", juce::NotificationType::dontSendNotification);
+    addAndMakeVisible(songNameLabel);
 }
 
 void AudioPlayerUI::paint(juce::Graphics& g)
@@ -57,12 +60,15 @@ void AudioPlayerUI::paint(juce::Graphics& g)
 
 void AudioPlayerUI::resized()
 {
+
     auto w = 100;
     auto h = 50;
     auto pad = 10;
-    loadAudioButton.setBounds(5, 5, w, h);
-    playAudioButton.setBounds(loadAudioButton.getRight() + pad, 5, w, h);
-    stopAudioButton.setBounds(playAudioButton.getRight() + pad,5,w,h);
-    gainSlider.setBounds(0, loadAudioButton.getBottom() + pad, 50, 150);                   // slider
+    auto y = getHeight() - (h + pad);
 
+    loadAudioButton.setBounds(5, y, w, h);
+    playAudioButton.setBounds(loadAudioButton.getRight() + pad, y, w, h);
+    stopAudioButton.setBounds(playAudioButton.getRight() + pad,y,w,h);
+    gainSlider.setBounds(0, 60,50, 150);                   // slider
+    songNameLabel.setBounds(5, 5, 400, 20);
 }
