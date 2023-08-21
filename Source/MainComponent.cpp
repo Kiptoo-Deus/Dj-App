@@ -73,16 +73,17 @@ void MainComponent::releaseResources()
 void MainComponent::paint(juce::Graphics& g)
 {
 
-    g.fillAll(getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId));
+    g.fillAll(juce::Colours::darkgrey);
 
 }
 
-void MainComponent::resized()
+void MainComponent::resized() 
 {
-   
+
+      auto pad = 10;
  
-    audioPlayerUI1.setBounds(0, 0, getWidth(), getHeight());
-    settingsButton.setBounds(10, 10, 100, 50);
+     settingsButton.setBounds(10, 10, 100, 50);
+     audioPlayerUI1.setBounds(10, settingsButton.getBottom() + pad, 350,250);
 }
 
 

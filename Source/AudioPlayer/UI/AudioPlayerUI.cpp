@@ -52,25 +52,17 @@ AudioPlayerUI::AudioPlayerUI(AudioPlayerData& p): audioPlayerData(p)
 void AudioPlayerUI::paint(juce::Graphics& g)
 {
     
-
-    g.fillAll(getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId));   // clear the background
-
-    g.setColour(juce::Colours::grey);
-    g.drawRect(getLocalBounds(), 1);                            // draw an outline around the component
-
-    g.setColour(juce::Colours::white);
-    g.setFont(14.0f);
-    g.drawText("AudioPlayerUI", getLocalBounds(),
-        juce::Justification::centred, true);                  // draw some placeholder text
+    g.fillAll(juce::Colours::black); //background color
 }
 
 void AudioPlayerUI::resized()
 {
     auto w = 100;
     auto h = 50;
-    loadAudioButton.setBounds(10, 200, w, h);
-    playAudioButton.setBounds(10, 260, w, h);
-    stopAudioButton.setBounds(10, 320, w, h);
-    gainSlider.setBounds(120,200,50,170);                   // slider
+    auto pad = 10;
+    loadAudioButton.setBounds(5, 5, w, h);
+    playAudioButton.setBounds(loadAudioButton.getRight() + pad, 5, w, h);
+    stopAudioButton.setBounds(playAudioButton.getRight() + pad,5,w,h);
+    gainSlider.setBounds(0, loadAudioButton.getBottom() + pad, 50, 150);                   // slider
 
 }
