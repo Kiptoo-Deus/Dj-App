@@ -6,7 +6,7 @@ MainComponent::MainComponent() :
     audioPlayerUI1(audioPlayerData1)
 {
   
-    setSize (800, 600);
+    setSize (1200, 1100);
 
     if (juce::RuntimePermissions::isRequired (juce::RuntimePermissions::recordAudio)
         && ! juce::RuntimePermissions::isGranted (juce::RuntimePermissions::recordAudio))
@@ -83,7 +83,7 @@ void MainComponent::resized()
       auto pad = 10;
  
      settingsButton.setBounds(10, 10, 100, 50);
-     audioPlayerUI1.setBounds(10, settingsButton.getBottom() + pad, 350,250);
+     audioPlayerUI1.setBounds(10, settingsButton.getBottom() + pad, 600,300);
 }
 
 
