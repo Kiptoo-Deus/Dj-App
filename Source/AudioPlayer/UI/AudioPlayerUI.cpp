@@ -48,8 +48,20 @@ AudioPlayerUI::AudioPlayerUI(AudioPlayerData& p): audioPlayerData(p)
 
     addAndMakeVisible(gainSlider);
 
+    
+    juce::Font f{ 25.0f,juce::Font::FontStyleFlags::bold };
+
+    songNameLabel.setFont(f);
     songNameLabel.setText("No song loaded", juce::NotificationType::dontSendNotification);
+    songNameLabel.setColour(juce::Label::ColourIds::outlineColourId, juce::Colours::white);
     addAndMakeVisible(songNameLabel);
+
+
+    artistNameLabel.setFont(f);
+    artistNameLabel.setText("No Artist", juce::NotificationType::dontSendNotification);
+    artistNameLabel.setColour(juce::Label::ColourIds::outlineColourId, juce::Colours::white);
+    addAndMakeVisible(artistNameLabel);
+    
 }
 
 void AudioPlayerUI::paint(juce::Graphics& g)
@@ -64,11 +76,15 @@ void AudioPlayerUI::resized()
     auto w = 100;
     auto h = 50;
     auto pad = 10;
+    auto x = 5;
     auto y = getHeight() - (h + pad);
+    auto labelWidth = 500;
+    auto labelHeight = 30;
 
     loadAudioButton.setBounds(5, y, w, h);
     playAudioButton.setBounds(loadAudioButton.getRight() + pad, y, w, h);
     stopAudioButton.setBounds(playAudioButton.getRight() + pad,y,w,h);
-    gainSlider.setBounds(0, 60,50, 150);                   // slider
-    songNameLabel.setBounds(5, 5, 400, 20);
+    gainSlider.setBounds(x, 70,50, 150);                   // slider
+    songNameLabel.setBounds(x, 5, labelWidth, labelHeight);
+    artistNameLabel.setBounds(x, songNameLabel.getBottom(), labelWidth, labelHeight);
 }
