@@ -68,6 +68,9 @@ void AudioPlayerUI::paint(juce::Graphics& g)
 {
     
     g.fillAll(juce::Colours::black); //background color
+    g.setColour(juce::Colours::white);
+    juce::Rectangle<float> discArea{ 375.0f,static_cast<float> (artistNameLabel.getBottom()) + 10.0f,200.0f,200.0f};
+    g.drawEllipse(discArea, 10.0f);
 }
 
 void AudioPlayerUI::resized()
