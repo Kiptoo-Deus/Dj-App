@@ -35,6 +35,7 @@ private:
     juce::Slider gainSlider{ juce::Slider::SliderStyle::LinearVertical, juce::Slider::TextBoxBelow };
     juce::Label songNameLabel{ "Song Name" };
     juce::Label artistNameLabel{ "Artist Name" };
+    juce::Label songLengthLabel{ "Song Length" };
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioPlayerUI)
 };
 
