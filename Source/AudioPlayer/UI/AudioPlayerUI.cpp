@@ -29,12 +29,12 @@ AudioPlayerUI::AudioPlayerUI(AudioPlayerData& p): audioPlayerData(p)
 
     playAudioButton.onClick = [&]()
     {
-        audioPlayerData.setPlaySate (AudioPlayerState::Playing) ;
+        audioPlayerData.setPlayState (AudioPlayerState::Playing) ;
     };
 
     stopAudioButton.onClick = [&]()
     {
-        audioPlayerData.setPlaySate ( AudioPlayerState::Stopped) ;
+        audioPlayerData.setPlayState ( AudioPlayerState::Stopped) ;
     };
 
     gainSlider.setRange(-60.0, 0.0f,0.01);

@@ -22,10 +22,15 @@ public:
     void setDecibelValue(float value);
     AudioPlayerState getPlayState() const { return playState; }
 
-    void setPlaySate(AudioPlayerState newState) { playState = newState; 
-  }
+    void setPlayState(AudioPlayerState newState) { playState = newState; }
+    juce::String getArtistName()const { return artistName; }
+    juce::String getTrackName()const { return trackName; }
+
+
+  
   
 private:
+    void loadMetadata(juce::AudioFormatReader& reader);
     juce::AudioFormatManager audioFormatManager;
 
     //Holds "entire track"
@@ -36,6 +41,9 @@ private:
     bool fileIsLoaded{ false };
     float rawGain{ 1.0f };
     AudioPlayerState playState{ AudioPlayerState::Stopped };
+
+    juce::String artistName{ "" };
+    juce::String trackName{ "" };
   
 };
 
