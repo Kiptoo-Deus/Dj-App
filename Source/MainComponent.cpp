@@ -23,6 +23,10 @@ MainComponent::MainComponent() :
   
     deviceManager.addChangeListener(&deviceScanner);
 
+
+    //TODO; move this to its own class
+    audioPlayerData1.addChangeListener(&audioPlayerUI1);
+
     settingsButton.setButtonText("Settings");
     settingsButton.setToggleable(false);
 
@@ -38,13 +42,14 @@ MainComponent::MainComponent() :
 
     addAndMakeVisible(settingsButton);
     addAndMakeVisible(audioPlayerUI1);
+
     fileIsLoaded = audioPlayerData1.loadFile();
 }
 
 MainComponent::~MainComponent()
 {
     deviceManager.removeAllChangeListeners();
-    
+    audioPlayerData1.removeAllChangeListeners();
     shutdownAudio();
 }
 

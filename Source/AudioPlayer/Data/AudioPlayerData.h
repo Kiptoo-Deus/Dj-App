@@ -12,7 +12,7 @@
 #include <JuceHeader.h>
 #include "../../State/AudioPlayerState.h"
 
-class AudioPlayerData
+class AudioPlayerData: public juce::ChangeBroadcaster
 {
 public:
     AudioPlayerData();
