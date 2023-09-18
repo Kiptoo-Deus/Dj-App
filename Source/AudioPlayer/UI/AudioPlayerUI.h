@@ -21,7 +21,7 @@ class AudioPlayerUI  : public juce::Component, public juce::ChangeListener
 {
 public:
     AudioPlayerUI(AudioPlayerData& p);
-    /*~AudioPlayerUI() override;*///<<<<<Line to note incase UI breaks
+    ~AudioPlayerUI() override;
 
     void paint (juce::Graphics&) override;
     void resized() override;
