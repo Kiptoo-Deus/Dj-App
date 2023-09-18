@@ -22,6 +22,8 @@ AudioPlayerUI::AudioPlayerUI(AudioPlayerData& p): audioPlayerData(p)
     addAndMakeVisible(playAudioButton);
     addAndMakeVisible(stopAudioButton);
 
+    audioPlayerData.addChangeListener(this);
+
     loadAudioButton.onClick = [&]()
     {
         audioPlayerData.loadFile();
@@ -67,6 +69,10 @@ AudioPlayerUI::AudioPlayerUI(AudioPlayerData& p): audioPlayerData(p)
     //songLengthLabel.setColour(juce::Label::ColourIds::outlineColourId, juce::Colours::white);
     addAndMakeVisible(trackLengthLabel);
     
+}
+AudioPlayerUI::~AudioPlayerUI()
+{
+    audioPlayerData.removeChangeListener(this);
 }
 
 void AudioPlayerUI::paint(juce::Graphics& g)

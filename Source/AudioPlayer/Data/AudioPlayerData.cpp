@@ -44,6 +44,8 @@
                 loadMetadata(*reader); 
             else
                 trackName = musicFile.getFileNameWithoutExtension();
+
+            sendChangeMessage();
                 
             //file loaded succesfully?
             reader->read(&audiosourceBuffer, 0, numSamples, 0, true, true);

@@ -23,10 +23,6 @@ MainComponent::MainComponent() :
   
     deviceManager.addChangeListener(&deviceScanner);
 
-
-    //TODO; move this to its own class
-    audioPlayerData1.addChangeListener(&audioPlayerUI1);
-
     settingsButton.setButtonText("Settings");
     settingsButton.setToggleable(false);
 
@@ -49,7 +45,7 @@ MainComponent::MainComponent() :
 MainComponent::~MainComponent()
 {
     deviceManager.removeAllChangeListeners();
-    audioPlayerData1.removeAllChangeListeners();
+    
     shutdownAudio();
 }
 
