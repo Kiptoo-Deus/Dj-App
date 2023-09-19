@@ -45,8 +45,8 @@
             else
                 trackName = musicFile.getFileNameWithoutExtension();
 
-            juce::String l{ reader->lengthInSamples / reader->sampleRate };
-            trackLength = l;
+            
+            trackLength = juce::String { reader->lengthInSamples / reader->sampleRate };
 
             sendChangeMessage();
                 
