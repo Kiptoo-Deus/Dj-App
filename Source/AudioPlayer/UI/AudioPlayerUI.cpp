@@ -113,4 +113,5 @@ void AudioPlayerUI::resized()
 void AudioPlayerUI::changeListenerCallback (juce:: ChangeBroadcaster* source)
 {
     trackNameLabel.setText( audioPlayerData.getTrackName(), juce::dontSendNotification);
+    trackLengthLabel.setText(audioPlayerData.getTrackLength(), juce::dontSendNotification);
 }

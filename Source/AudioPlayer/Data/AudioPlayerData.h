@@ -25,6 +25,7 @@ public:
     void setPlayState(AudioPlayerState newState) { playState = newState; }
     juce::String getArtistName()const { return artistName; }
     juce::String getTrackName()const { return trackName; }
+    juce::String getTrackLength()const { return trackLength; }
 
 
   
@@ -44,6 +45,7 @@ private:
 
     juce::String artistName{ "" };
     juce::String trackName{ "" };
+    juce::String trackLength{ "" };
   
 };
 
